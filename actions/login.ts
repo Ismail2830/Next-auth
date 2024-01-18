@@ -1,6 +1,7 @@
 "use server"
 
 import * as z from "zod"
+import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -9,5 +10,5 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     if(!validatedFields.success){
         return {error: "Invalid fields!"};
     }
-        return {success: "Email sent!"}
+        const { email, password } = validatedFields.data
 }
