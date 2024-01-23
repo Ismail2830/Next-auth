@@ -48,8 +48,8 @@ export const LoginForm = () => {
         login(values)
         .then((data) => {
           setError(data?.error);
-          // we will add it when we throw error 
-         // setSuccess(data?.success);
+          
+          setSuccess(data?.success);
         })
       })
      
