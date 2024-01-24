@@ -30,7 +30,7 @@ export const LoginForm = () => {
     ? "Email already in use with different provider!"
     : "";
 
-
+    const [showTwoFactor, setShowTwoFactor] = useState(false)
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
@@ -47,10 +47,21 @@ export const LoginForm = () => {
       startTransition(() => {
         login(values)
         .then((data) => {
-          setError(data?.error);
           
-          setSuccess(data?.success);
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          }
+
+          if (data?.success) {
+            form.reset();
+            setSuccess(data.success);
+          }
+          if (data?.twoFactor) {
+            setShowTwoFactor(true);
+          }
         })
+        .catch(() => setError("Something went wrong"));
       })
      
         
